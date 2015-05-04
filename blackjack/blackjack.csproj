@@ -43,8 +43,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="lib\" />
+    <Folder Include="etc\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lib\MySql.Data.dll" />
+    <None Include="etc\createdb.sql" />
   </ItemGroup>
 </Project>
