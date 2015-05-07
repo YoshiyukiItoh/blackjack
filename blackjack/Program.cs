@@ -2,7 +2,7 @@
 using System.Data;
 using System.Linq;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
+using Oracle.DataAccess.Client;
 
 namespace blackjack
 {
@@ -12,7 +12,6 @@ namespace blackjack
 
 		public static void Main (string[] args)
 		{
-			Console.WriteLine ("Hello World!");
 			MainClass instance = new MainClass ();
 			instance.solve ();
 		}
@@ -39,11 +38,12 @@ namespace blackjack
 			// judge
 			string winner = judge (player1_scores, player2_scores);
 			Console.WriteLine ("win : {0}", winner);
-			Console.WriteLine ("player1 score : {0}", player1_scores.Max ());
-			Console.WriteLine ("player2 score : {0}", player2_scores.Max ());
-
+            Console.WriteLine("player1 score : {0}  card1 : {1} card2 : {2}", player1_scores.Max(), player1_cards[0], player1_cards[1]);
+            Console.WriteLine("player2 score : {0}  card1 : {1} card2 : {2}", player2_scores.Max(), player2_cards[0], player2_cards[1]);
+            
 			// save result
 			saveResult (winner);
+            Console.ReadLine();
 		}
 
 		/// <summary>
@@ -124,7 +124,7 @@ namespace blackjack
 		}
 
 		/// <summary>
-		/// 
+		/// 点数を返します.
 		/// </summary>
 		/// <returns>The score.</returns>
 		/// <param name="number">Number.</param>
@@ -188,76 +188,87 @@ namespace blackjack
 
 		private void saveResult (string playerName)
 		{
-			// http://mikeda.hatenablog.com/entry/20090419/1240123566
-			// http://okwakatta.net/code/ado21.html
-			// http://mysql.stu.edu.tw/doc/refman/5.1/ja/connector-net-examples.html
+            // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleDataReaderClass.htm#i1003252
+            // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleCommandClass.htm
+            // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleConnectionClass.htm
+            // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleTransactionClass.htm#i1015115
+            string tableName = "player_info";
+            //DB接続
+            OracleCommand cmd = new OracleCommand();
+            OracleConnection conn = connDB();
+            conn.Open();
+            OracleTransaction tran = conn.BeginTransaction();
 
-			string tableName = "player_info";
-			//DB接続
-			MySqlCommand cmd = new MySqlCommand ();
-			MySqlConnection conn = connDB ();
-			conn.Open ();
-			MySqlTransaction tran = conn.BeginTransaction (); 
+            try
+            {
+                // select for update
+                string sql = String.Format("select name,win_count from {0} where name = '{1}' for update", tableName, playerName);
+                int win_count = SelectWinCount(ref cmd, conn, tran, sql);
 
-			try {
-				// select for update
-
-				string sql = String.Format ("select * from {0} where name = '{1}' for update;", tableName, playerName);
-				int win_count = SelectWinCount (ref cmd, conn, tran, sql);
-
-				if (win_count == 0) {
-					// insert
-					sql = String.Format ("insert into {0} values ('{1}',{2});", tableName, playerName, 1);
-				} else {
-					// update
-					sql = String.Format ("update {0} set win_count = {1} where name = '{2}'", tableName, win_count + 1, playerName);
-				}
-				UpdateWinCount (ref cmd, conn, tran, sql);
-
-				tran.Commit ();
-			} catch (Exception e) {
-				tran.Rollback ();
-				Console.WriteLine (e.Data);
-				throw e;
-			} finally {
-				conn.Close ();
-			}
-
+                if (win_count == 0)
+                {
+                    // insert
+                    sql = String.Format("insert into {0} values ('{1}',{2})", tableName, playerName, 1);
+                }
+                else
+                {
+                    // update
+                    sql = String.Format("update {0} set win_count = {1} where name = '{2}'", tableName, win_count + 1, playerName);
+                }
+                UpdateWinCount(ref cmd, conn, tran, sql);
+                tran.Commit();
+            }
+            catch (Exception e)
+            {
+                tran.Rollback();
+                Console.WriteLine(e.Message);
+                //throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
 		}
 
-		private MySqlConnection connDB ()
+		private OracleConnection connDB ()
 		{
-			string connStr = String.Format ("server={0};user id={1};password={2};"
-			                 + "database={3}; pooling=false", "localhost", "root", "superuser", "test");
-			
-
-			return new MySqlConnection (connStr);
+			string connStr = String.Format (@"User Id={0}; Password={0}; Data Source="
+                                          + "(DESCRIPTION="
+                                          + " (LOAD_BALANCE=ON)(FAILOVER=ON)"
+                                          + "  (ADDRESS=(PROTOCOL=TCP)(HOST={1})(PORT={3}))"
+                                          + "  (ADDRESS=(PROTOCOL=TCP)(HOST={2})(PORT={3}))"
+                                          + "  (CONNECT_DATA=(SERVICE_NAME={4}))"
+                                          + " )", "test", "192.168.56.111", "192.168.56.112", "1521","ORCL");
+			return new OracleConnection (connStr);
 		}
 
-		private int SelectWinCount (ref MySqlCommand cmd, MySqlConnection conn, MySqlTransaction tran, string sql)
+		private int SelectWinCount (ref OracleCommand cmd, OracleConnection conn, OracleTransaction tran, string sql)
 		{
 			//SQL実行
 			cmd.CommandText = sql;
 			cmd.Connection = conn;
 			cmd.Transaction = tran;
-			MySqlDataReader reader = cmd.ExecuteReader ();
+			OracleDataReader reader = cmd.ExecuteReader ();
 			int win_count = 0;
 			//テーブル出力
 			while (reader.Read ()) {
-				win_count = reader.GetInt32 (1);
+                Console.WriteLine("{0}, {1}", reader["name"], reader["win_count"]);
+                //win_count = reader.GetInt32(1);
+                win_count = int.Parse(reader["win_count"].ToString());
 			}
 			reader.Close ();
 			return win_count;
 		}
 
-		private int UpdateWinCount (ref MySqlCommand cmd, MySqlConnection conn, MySqlTransaction tran, string sql)
+        private int UpdateWinCount(ref OracleCommand cmd, OracleConnection conn, OracleTransaction tran, string sql)
 		{
-			//SQL実行
 			cmd.CommandText = sql;
 			cmd.Connection = conn;
 			cmd.Transaction = tran;
 			return cmd.ExecuteNonQuery ();
 		}
+
+        
 
 		static void debugDealAfterState (string[] cards, string[] player1, string[] player2)
 		{
