@@ -1,6 +1,9 @@
 ================================================================================
 ドライバのダウンロード
 http://download.oracle.com/otn/other/ole-oo4o/ODTwithODAC1120320_32bit.zip
+
+github
+https://github.com/YoshiyukiItoh/blackjack
 ================================================================================
 
 
