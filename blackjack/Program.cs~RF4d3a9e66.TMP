@@ -70,24 +70,20 @@ namespace blackjack
 			}
 		}
 
-        /// <summary>
-        /// 山札から2枚カードを取得します.
-        /// </summary>
-        /// <param name="cards"></param>
-        /// <returns></returns>
 		private string[] deal (ref string[] cards)
 		{
 			string[] ret = new string[2];
 			int seed = Environment.TickCount;
 
 			for (int i = 0; i < 2; i++) {
+				// create num
 				int rndNum;
 				do {
 					Random rnd = new Random (seed++);
 					rndNum = rnd.Next (52);
 				} while(cards [rndNum] == "");
 
-				// 選択されたカードは、選択されないようにマークする.
+				// exchange
 				ret [i] = cards [rndNum];
 				cards [rndNum] = "";
 
@@ -95,11 +91,6 @@ namespace blackjack
 			return ret;
 		}
 
-        /// <summary>
-        /// プレイヤーの手札をもとにスコアの計算を行います.
-        /// </summary>
-        /// <param name="player"></param>
-        /// <returns></returns>
 		private List<int> calcScore (string[] player)
 		{
 			List<int> scoreList = new List<int> ();
@@ -204,17 +195,12 @@ namespace blackjack
 			return player1.Max () > player2.Max () ? "player1" : "player2";
 		}
 
-        /// <summary>
-        /// プレイヤーの勝利を保存します.
-        /// </summary>
-        /// <param name="playerName"></param>
 		private void saveResult (string playerName)
 		{
             // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleDataReaderClass.htm#i1003252
             // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleCommandClass.htm
             // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleConnectionClass.htm
             // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleTransactionClass.htm#i1015115
-
             string tableName = "player_info";
             
             OracleCommand cmd = new OracleCommand();
