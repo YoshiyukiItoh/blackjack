@@ -7,8 +7,6 @@ namespace blackjack
 {
 	class Program
 	{
-		private const int borderline_point = 21;
-
 		public static void Main (string[] args)
 		{
             List<Player> players = new List<Player>();
