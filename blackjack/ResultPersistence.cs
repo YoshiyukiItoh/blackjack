@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace blackjack
 {
-    interface resultPersistence
+    interface ResultPersistence
     {
+        public void Save(string playerName);
     }
 }
