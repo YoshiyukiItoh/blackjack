@@ -5,33 +5,32 @@ using System.Text;
 
 namespace blackjack
 {
-    abstract class Player
+    class Player
     {
-        protected string name;
-        protected List<string> cardList;
+        private string name;
+        private List<string> cardList;
 
-        protected Player(string name, List<string> cardList)
+        public Player(string name)
         {
             this.name = name;
-            this.cardList = cardList;
         }
 
-        protected string GetName()
+        public string GetName()
         {
             return name;
         }
 
-        protected void SetName(string name)
+        public void SetName(string name)
         {
             this.name = name;
         }
 
-        protected List<string> GetCardList()
+        public List<string> GetCardList()
         {
             return cardList;
         }
 
-        protected void SetCardList(List<string> cardList)
+        public void SetCardList(List<string> cardList)
         {
             this.cardList = cardList;
         }
