@@ -8,21 +8,21 @@ namespace blackjack
 {
     abstract class Player
     {
-        private string name;
-        private string[] cards;
+        protected string name;
+        protected string[] cards;
 
-        public Player(string name,string[] cards)
+        protected Player(string name, string[] cards)
         {
             this.name = name;
             this.cards = cards;
         }
 
-        public string GetName()
+        protected string GetName()
         {
             return name;
         }
 
-        public string[] GetCards()
+        protected string[] GetCards()
         {
             return cards;
         }
