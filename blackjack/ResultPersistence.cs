@@ -8,6 +8,6 @@ namespace blackjack
 {
     interface ResultPersistence
     {
-        public void Save(string playerName);
+        void Save(string playerName);
     }
 }

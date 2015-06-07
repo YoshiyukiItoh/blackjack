@@ -16,6 +16,7 @@ namespace blackjack
             Main main = new Main(new Blackjack(players)
                                 ,new DatabasePersistence());
             main.Start();
+            Console.ReadLine();
 		}
 
 	}

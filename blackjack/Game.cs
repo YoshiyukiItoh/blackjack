@@ -8,6 +8,6 @@ namespace blackjack
 {
     interface Game
     {
-        public string Play();
+        string Play();
     }
 }
