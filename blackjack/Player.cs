@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace blackjack
 {
     abstract class Player
     {
         protected string name;
-        protected string[] cards;
+        protected List<string> cardList;
 
-        protected Player(string name, string[] cards)
+        protected Player(string name, List<string> cardList)
         {
             this.name = name;
-            this.cards = cards;
+            this.cardList = cardList;
         }
 
         protected string GetName()
@@ -22,9 +21,19 @@ namespace blackjack
             return name;
         }
 
-        protected string[] GetCards()
+        protected void SetName(string name)
         {
-            return cards;
+            this.name = name;
+        }
+
+        protected List<string> GetCardList()
+        {
+            return cardList;
+        }
+
+        protected void SetCardList(List<string> cardList)
+        {
+            this.cardList = cardList;
         }
     }
 }
