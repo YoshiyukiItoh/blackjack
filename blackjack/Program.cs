@@ -13,30 +13,30 @@ namespace blackjack
 		public static void Main (string[] args)
 		{
 			MainClass instance = new MainClass ();
-			instance.solve ();
+			instance.Solve ();
 		}
 
-		private void solve ()
+		private void Solve ()
 		{
 			string[] cards = new string[52];
 
 			// create card data
-			createCards (ref cards);
+			CreateCards (ref cards);
 			// deal
-			string[] player1_cards = deal (ref cards);
-			string[] player2_cards = deal (ref cards);
+			string[] player1_cards = Deal (ref cards);
+			string[] player2_cards = Deal (ref cards);
 
 			// debug
-            debugDealAfterCardsState(cards, player1_cards, player2_cards);
+            DebugDealAfterCardsState(cards, player1_cards, player2_cards);
 
 			// calc
 			// debug
 			//calcScore(new string[] {"dA","hA", "h10"});
-			List<int> player1_scores = calcScore (player1_cards);
-			List<int> player2_scores = calcScore (player2_cards);
+			List<int> player1_scores = CalcScore (player1_cards);
+			List<int> player2_scores = CalcScore (player2_cards);
 
 			// judge
-			string winner = judge (player1_scores, player2_scores);
+			string winner = Judge (player1_scores, player2_scores);
             Console.WriteLine("====================================================");
             Console.WriteLine("Result");
             Console.WriteLine("====================================================");
@@ -57,7 +57,7 @@ namespace blackjack
 		///             h -> heart
 		/// </summary>
 		/// <param name="cards">Cards Array</param>
-		private void createCards (ref string[] cards)
+		private void CreateCards (ref string[] cards)
 		{
 			string[] cardkinds = { "c", "s", "d", "h" };
 			string[] cardNumbers = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
@@ -75,7 +75,7 @@ namespace blackjack
         /// </summary>
         /// <param name="cards"></param>
         /// <returns></returns>
-		private string[] deal (ref string[] cards)
+		private string[] Deal (ref string[] cards)
 		{
 			string[] ret = new string[2];
 			int seed = Environment.TickCount;
@@ -100,7 +100,7 @@ namespace blackjack
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
-		private List<int> calcScore (string[] player)
+		private List<int> CalcScore (string[] player)
 		{
 			List<int> scoreList = new List<int> ();
 			int cntA = 0;
@@ -109,14 +109,14 @@ namespace blackjack
 				// num -> 10  str -> h10
 				// num -> A   str -> dA
 				string num = str.Substring (1);
-				int score = getScore (num);
+				int score = GetScore (num);
 				if (score == 1)
 					cntA++;
-				scoreList.Add (getScore (num));
+				scoreList.Add (GetScore (num));
 			}
 			scoreList.Sort ();
 
-			List<int> ret = createCombi (cntA);
+			List<int> ret = CreateCombi (cntA);
 			List<int> removeList = new List<int> ();
 
 			for (int src_index = cntA; src_index < scoreList.Count; src_index++) {
@@ -140,7 +140,7 @@ namespace blackjack
 		/// </summary>
 		/// <returns>The score.</returns>
 		/// <param name="number">Number.</param>
-		private int getScore (string number)
+		private int GetScore (string number)
 		{
 			int ret = -1;
 			switch (number) {
@@ -179,7 +179,7 @@ namespace blackjack
 		/// <returns>A = 2の場合　{2,12}</returns>
 		/// <param name="cnt">Aの数(1 <= cnt <= 4)</param>
 		/// 
-		private List<int> createCombi (int cnt)
+		private List<int> CreateCombi (int cnt)
 		{
 			List<int> ret = new List<int> ();
 			int N = cnt + 1;
@@ -199,7 +199,7 @@ namespace blackjack
         /// <param name="player1">player1のポイントリスト</param>
         /// <param name="player2">player2のポイントリスト</param>
         /// <returns>勝利したプレイヤー名</returns>
-		private string judge (List<int> player1, List<int> player2)
+		private string Judge (List<int> player1, List<int> player2)
 		{
 			return player1.Max () > player2.Max () ? "player1" : "player2";
 		}
@@ -210,11 +210,6 @@ namespace blackjack
         /// <param name="playerName"></param>
 		private void saveResult (string playerName)
 		{
-            // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleDataReaderClass.htm#i1003252
-            // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleCommandClass.htm
-            // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleConnectionClass.htm
-            // http://docs.oracle.com/cd/E16338_01/win.112/b66456/OracleTransactionClass.htm#i1015115
-
             string tableName = "player_info";
             
             OracleCommand cmd = new OracleCommand();
@@ -305,7 +300,7 @@ namespace blackjack
 
         
 
-		static void debugDealAfterCardsState (string[] cards, string[] player1, string[] player2)
+		static void DebugDealAfterCardsState (string[] cards, string[] player1, string[] player2)
 		{
             Console.WriteLine("====================================================");
             Console.WriteLine("cards state");
