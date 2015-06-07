@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace blackjack
 {
-    class Player
+    abstract class Player
     {
         private string name;
         private string[] cards;
