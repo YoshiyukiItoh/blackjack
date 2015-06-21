@@ -38,11 +38,11 @@
     <Compile Include="Blackjack.cs" />
     <Compile Include="DatabasePersistence.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Main.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultPersistence.cs" />
+    <Compile Include="ServiceController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
