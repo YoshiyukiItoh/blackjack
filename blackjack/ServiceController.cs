@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace blackjack
 {
-    class Main
+    class ServiceController
     {
         Game game;
         ResultPersistence rp;
-        public Main(Game game, ResultPersistence rp)
+        public ServiceController(Game game, ResultPersistence rp)
         {
             this.game = game;
             this.rp = rp;
