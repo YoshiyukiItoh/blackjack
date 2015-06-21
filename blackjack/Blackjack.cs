@@ -12,6 +12,14 @@ namespace blackjack
         private string[] cards;
         private List<Player> players;
 
+		private Dictionary<string, int> pointTable = new Dictionary<string, int>()
+		{
+			{"A", 1},{"2", 2},{"3", 3},{"4", 4},
+			{"5", 5},{"6", 6},{"7", 7},{"8", 8},
+			{"9", 9},{"J", 10},{"Q", 10},{"K", 10}
+		};
+
+
         public Blackjack(List<Player> players)
         {
             this.players = players;
@@ -140,33 +148,8 @@ namespace blackjack
         /// <returns>The score.</returns>
         /// <param name="number">Number.</param>
         private int GetScore(string number)
-        {
-            int ret = -1;
-            switch (number)
-            {
-                case "A":
-                    ret = 1;
-                    break;
-                case "2":
-                case "3":
-                case "4":
-                case "5":
-                case "6":
-                case "7":
-                case "8":
-                case "9":
-                    ret = int.Parse(number);
-                    break;
-                case "10":
-                case "J":
-                case "Q":
-                case "K":
-                    ret = 10;
-                    break;
-                default:
-                    break;
-            }
-            return ret;
+		{
+			return pointTable[number] == null ? -1 : pointTable[number];
         }
 
         /// <summary>
