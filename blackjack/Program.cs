@@ -11,10 +11,11 @@ namespace blackjack
 		{
             List<Player> players = new List<Player>();
             players.Add(new Player("player1"));
-            players.Add(new Player("player2"));
+			players.Add(new Player ("player2"));
 
-            ServiceController main = new ServiceController(new Blackjack(players)
-                                                          ,new DatabasePersistence());
+            ServiceController main 
+			    = new ServiceController(new Blackjack(players, new CliInterface())
+                                       ,new DatabasePersistence());
             main.Start();
             Console.ReadLine();
 		}

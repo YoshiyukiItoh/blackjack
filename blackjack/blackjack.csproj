@@ -44,6 +44,8 @@
     <Compile Include="Player.cs" />
     <Compile Include="Blackjack.cs" />
     <Compile Include="ResultPersistence.cs" />
+    <Compile Include="OutputInterface.cs" />
+    <Compile Include="CliInterface.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

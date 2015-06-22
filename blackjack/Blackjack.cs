@@ -11,6 +11,7 @@ namespace blackjack
         private const int borderline_point = 21;
         private string[] cards;
         private List<Player> players;
+		private OutputInterface outputIf;
 
 		private Dictionary<string, int> pointTable = new Dictionary<string, int>()
 		{
@@ -20,9 +21,10 @@ namespace blackjack
 		};
 
 
-        public Blackjack(List<Player> players)
+		public Blackjack(List<Player> players, OutputInterface outputIf)
         {
             this.players = players;
+			this.outputIf = outputIf;
         }
 
         public string Play()
@@ -201,31 +203,31 @@ namespace blackjack
 
         static void DebugDealAfterCardsState(string[] cards, List<Player> players)
         {
-            Console.WriteLine("====================================================");
-            Console.WriteLine("cards state");
-            Console.WriteLine("====================================================");
+			outputIf.WriteLine("====================================================");
+			outputIf.WriteLine("cards state");
+			outputIf.WriteLine("====================================================");
             int i = 0;
             foreach (string str in cards)
             {
                 if (i == 13)
                 {
                     i = 0;
-                    Console.WriteLine();
+					outputIf.WriteLine(String.Empty());
                 }
-                Console.Write(String.Format("{0,4}", str));
+				outputIf.Write(String.Format("{0,4}", str));
                 i++;
             }
-            Console.WriteLine();
-            Console.WriteLine("====================================================");
+			outputIf.WriteLine(String.Empty());
+			outputIf.WriteLine("====================================================");
             foreach (Player player in players)
             {
-                Console.WriteLine("{0} : ", player.GetName());
+				outputIf.WriteLine("{0} : ", player.GetName());
                 List<string> cardList = player.GetCardList();
                 foreach (string card in cardList)
                 {
-                    Console.Write(String.Format("{0,4}", card));
+					outputIf.Write(String.Format("{0,4}", card));
                 }
-                Console.WriteLine();
+				outputIf.WriteLine();
             }
         }
 
