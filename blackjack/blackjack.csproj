@@ -56,7 +56,4 @@
   <ItemGroup>
     <None Include="etc\createdb-oracle.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
 </Project>
