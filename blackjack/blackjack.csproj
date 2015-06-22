@@ -38,11 +38,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceController.cs" />
-    <Compile Include="BLogic\Game.cs" />
-    <Compile Include="BLogic\Blackjack.cs" />
-    <Compile Include="Model\DatabasePersistence.cs" />
-    <Compile Include="Model\ResultPersistence.cs" />
-    <Compile Include="BLogic\Player.cs" />
+    <Compile Include="DatabasePersistence.cs">
+    </Compile>
+    <Compile Include="Game.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Blackjack.cs" />
+    <Compile Include="ResultPersistence.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
@@ -54,8 +55,6 @@
     <None Include="etc\createdb-oracle.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BLogic\" />
-    <Folder Include="Model\" />
     <Folder Include="View\" />
   </ItemGroup>
 </Project>
