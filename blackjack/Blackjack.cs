@@ -201,7 +201,7 @@ namespace blackjack
             return winner;
         }
 
-        static void DebugDealAfterCardsState(string[] cards, List<Player> players)
+        private void DebugDealAfterCardsState(string[] cards, List<Player> players)
         {
 			outputIf.WriteLine("====================================================");
 			outputIf.WriteLine("cards state");
@@ -212,22 +212,22 @@ namespace blackjack
                 if (i == 13)
                 {
                     i = 0;
-					outputIf.WriteLine(String.Empty());
+					outputIf.WriteLine(String.Empty);
                 }
 				outputIf.Write(String.Format("{0,4}", str));
                 i++;
             }
-			outputIf.WriteLine(String.Empty());
+			outputIf.WriteLine(String.Empty);
 			outputIf.WriteLine("====================================================");
             foreach (Player player in players)
             {
-				outputIf.WriteLine("{0} : ", player.GetName());
+				outputIf.WriteLine("{0} : ", new Object[] {player.GetName()});
                 List<string> cardList = player.GetCardList();
                 foreach (string card in cardList)
                 {
 					outputIf.Write(String.Format("{0,4}", card));
                 }
-				outputIf.WriteLine();
+                outputIf.WriteLine(String.Empty);
             }
         }
 
