@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace blackjack
 {
-    class ServiceController
+    public class ServiceController
     {
         Game game;
         ResultPersistence rp;

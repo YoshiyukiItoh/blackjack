@@ -5,7 +5,7 @@ using System.Text;
 
 namespace blackjack
 {
-    class Player
+    public class Player
     {
         private string name;
         private List<string> cardList;

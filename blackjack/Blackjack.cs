@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace blackjack
 {
-    class Blackjack : Game
+    public class Blackjack : Game
     {
         private const int borderline_point = 21;
         private string[] cards;

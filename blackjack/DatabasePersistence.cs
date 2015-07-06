@@ -7,7 +7,7 @@ using Oracle.DataAccess.Client;
 
 namespace blackjack
 {
-    class DatabasePersistence :ResultPersistence
+    public class DatabasePersistence :ResultPersistence
     {
         private string tableName = "player_info";
 
