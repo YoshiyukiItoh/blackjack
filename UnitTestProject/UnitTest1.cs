@@ -13,7 +13,13 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethod1()
         {
+            string name = "player1";
+            List<Player> players = new List<blackjack.Player>();
+            players.Add(new Player(name));
 
+            var obj = new Blackjack(players, new CliInterface());
+            string str = obj.Play();
+            Assert.AreEqual(name, str);
         }
     }
 }
