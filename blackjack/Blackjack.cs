@@ -11,9 +11,9 @@ namespace blackjack
         private const int borderline_point = 21;
         private string[] cards;
         private List<Player> players;
-		private OutputInterface outputIf;
+        private OutputInterface outputIf;
 
-		private Dictionary<string, int> pointTable = new Dictionary<string, int>()
+        private Dictionary<string, int> pointTable = new Dictionary<string, int>()
 		{
 			{"A", 1},{"2", 2},{"3", 3},{"4", 4},
 			{"5", 5},{"6", 6},{"7", 7},{"8", 8},
@@ -21,10 +21,10 @@ namespace blackjack
 		};
 
 
-		public Blackjack(List<Player> players, OutputInterface outputIf)
+        public Blackjack(List<Player> players, OutputInterface outputIf)
         {
             this.players = players;
-			this.outputIf = outputIf;
+            this.outputIf = outputIf;
         }
 
         public string Play()
@@ -150,8 +150,12 @@ namespace blackjack
         /// <returns>The score.</returns>
         /// <param name="number">Number.</param>
         private int GetScore(string number)
-		{
-			return pointTable[number] == null ? -1 : pointTable[number];
+        {
+            if (pointTable.ContainsKey(number))
+            {
+                return pointTable[number];
+            }
+            return -1;
         }
 
         /// <summary>
@@ -203,29 +207,29 @@ namespace blackjack
 
         private void DebugDealAfterCardsState(string[] cards, List<Player> players)
         {
-			outputIf.WriteLine("====================================================");
-			outputIf.WriteLine("cards state");
-			outputIf.WriteLine("====================================================");
+            outputIf.WriteLine("====================================================");
+            outputIf.WriteLine("cards state");
+            outputIf.WriteLine("====================================================");
             int i = 0;
             foreach (string str in cards)
             {
                 if (i == 13)
                 {
                     i = 0;
-					outputIf.WriteLine(String.Empty);
+                    outputIf.WriteLine(String.Empty);
                 }
-				outputIf.Write(String.Format("{0,4}", str));
+                outputIf.Write(String.Format("{0,4}", str));
                 i++;
             }
-			outputIf.WriteLine(String.Empty);
-			outputIf.WriteLine("====================================================");
+            outputIf.WriteLine(String.Empty);
+            outputIf.WriteLine("====================================================");
             foreach (Player player in players)
             {
-				outputIf.WriteLine("{0} : ", new Object[] {player.GetName()});
+                outputIf.WriteLine("{0} : ", new Object[] { player.GetName() });
                 List<string> cardList = player.GetCardList();
                 foreach (string card in cardList)
                 {
-					outputIf.Write(String.Format("{0,4}", card));
+                    outputIf.Write(String.Format("{0,4}", card));
                 }
                 outputIf.WriteLine(String.Empty);
             }
