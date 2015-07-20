@@ -68,7 +68,7 @@ namespace blackjack
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
-        public List<int> GetScores()
+        private List<int> GetScores()
         {
             List<int> scoreList = new List<int>();
             int cntA = 0;
