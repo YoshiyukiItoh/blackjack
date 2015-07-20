@@ -27,6 +27,36 @@ namespace UnitTestProject
     public class UnitTestPlayerClass
     {
         [TestMethod]
+        public void TestMethod_GetScore1()
+        {
+            string[] numbers = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+            int[] expected = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10 };
+            Player p = new Player("p");
+            var pObj = new PrivateObject(p);
+
+            for(int i = 0; i < numbers.Length;i++)
+            {
+                var actual = pObj.Invoke("GetScore", new Object[] { numbers[i] });
+                Assert.AreEqual(expected[i],actual);
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod_GetScore2()
+        {
+            string[] numbers = { "B", "-1", "11", "1"};
+            int[] expected = { -1, -1, -1, -1};
+            Player p = new Player("p");
+            var pObj = new PrivateObject(p);
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                var actual = pObj.Invoke("GetScore", new Object[] { numbers[i] });
+                Assert.AreEqual(expected[i], actual);
+            }
+        }
+
+        [TestMethod]
         public void TestMethod_CreateACombiPattern1()
         {
             Player p = new Player("p");
