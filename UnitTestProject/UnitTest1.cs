@@ -57,6 +57,24 @@ namespace UnitTestProject
         }
 
         [TestMethod]
+        public void TestMethod_GetMaxScore1()
+        {
+            Player p = new Player("p");
+            List<string> list = new List<string>() { "hA", "h10" };
+            p.SetCardList(list);
+            Assert.AreEqual(21, p.GetMaxScore());
+        }
+
+        [TestMethod]
+        public void TestMethod_GetMaxScore2()
+        {
+            Player p = new Player("p");
+            List<string> list = new List<string>() { "hA", "dA", "sA", "cA", "h7" };
+            p.SetCardList(list);
+            Assert.AreEqual(21, p.GetMaxScore());
+        }
+
+        [TestMethod]
         public void TestMethod_CreateACombiPattern1()
         {
             Player p = new Player("p");
