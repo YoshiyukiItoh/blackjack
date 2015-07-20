@@ -8,7 +8,7 @@ using blackjack;
 namespace UnitTestProject
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTestBlackJack
     {
         [TestMethod]
         public void TestMethod1()
